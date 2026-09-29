@@ -1,12 +1,12 @@
 # One entry per officer. `id` must be unique (use first-last).
 # Photos go in public/officers/ (square, at least 600×600), then add e.g. `photo: /officers/sanjith.jpg`.
 # Lower `order` shows first.
-- id: sanjith
-  name: Sanjith
-  role: Co-President
-  order: 1
 - id: hansel
   name: Hansel
+  role: Co-President
+  order: 1
+- id: sanjith
+  name: Sanjith
   role: Co-President
   order: 2
 - id: uddhav
@@ -14,6 +14,22 @@
   role: Project Director
   order: 3
 - id: skye
-  name: Skye
+  name: Skye B.
   role: Project Director
   order: 4
+- id: rona-cetin
+  name: Rona Cetin
+  role: Operations Chair
+  order: 5
+- id: thejo-tattala
+  name: Thejo Tattala
+  role: External Events Chair
+  order: 6
+- id: raymond
+  name: Raymond
+  role: Marketing Chair
+  order: 7
+- id: oliva
+  name: Oliva
+  role: Internal Affairs
+  order: 8

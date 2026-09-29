@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from 'astro:content';
+import { Image } from 'astro:assets';
 
 interface Props {
   project: CollectionEntry<'projects'>;
@@ -8,6 +9,7 @@ const { project: p } = Astro.props;
 ---
 <li data-tracks={p.data.tracks.join(' ')}>
   <a class="project" href={`/projects/${p.id}/`}>
+    {p.data.image && <Image src={p.data.image} alt="" width={640} class="thumb" />}
     <h3>{p.data.title}</h3>
     <p>{p.data.summary}</p>
     {p.data.tracks.length > 0 && <span class="tags">{p.data.tracks.map((t) => <span class="tag">{t}</span>)}</span>}
@@ -25,8 +27,16 @@ const { project: p } = Astro.props;
     border: 1px solid var(--rule);
     border-top: 4px solid var(--burgundy-2);
     border-radius: var(--radius-s);
+    overflow: hidden;
     color: var(--ink);
     text-decoration: none;
+  }
+  .thumb {
+    width: calc(100% + 44px);
+    max-width: none;
+    margin: -22px -22px 4px;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
   }
   .project:hover {
     border-top-color: var(--green);

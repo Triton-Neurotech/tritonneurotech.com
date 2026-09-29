@@ -1,23 +1,36 @@
 ---
 title: EMG piano
 year: "2025–26"
-kind: build
-tracks: [EMG, Hardware, ML]
-summary: Play piano by moving your fingers in the air. EMG electrodes on each forearm detect individual finger movements, and each one plays a different key.
+tracks: [EMG, ML]
+summary: Play notes and chords with muscle signals instead of key presses, for people with limited finger mobility.
+image: ./images/piano-hand-pose.jpg
 ---
 
-The piano team was one of three 2025–26 teams, with ASL and prosthetics, working on decoding hand movement from EMG. Their work feeds into this year's [sEMG-based third arm](/projects/semg-third-arm/).
+## Goal
 
-## The idea
+Let people play piano without fine finger movement or a physical keyboard, for example after a stroke or spinal cord injury. EMG reads finger positions, and an accelerometer handles hand position and the sustain pedal.
 
-Three to four EMG electrodes on each arm, each placed to pick up a different finger movement. The system classifies which finger moved and triggers the matching key on a virtual piano.
+## Approach
 
-## What the project involves
+- Pretrained a small **Vision Transformer on emg2pose**, a large dataset pairing EMG with hand pose
+- Fine-tuned it on the team's own piano EMG recordings
+- Treated each moment as multi-label classification of notes and chords
 
-- An electrode layout that reliably separates individual finger movements
-- A signal-processing and classification pipeline for the EMG channels
-- The link from each detected movement to a key on an online piano
+![EMG channels recorded while playing](./images/piano-emg.jpg)
 
-## Hardware
+## Results
 
-Sticky EMG electrodes and cables, read by an OpenBCI Cyton board or the club's existing EMG setup.
+Trained on single notes, repeated notes, note transitions, simple triads and mixed sequences:
+
+- Single and repeated notes worked best
+- Simple triads decoded reasonably well
+- Sharps and flats were harder, since the finger differences are subtle
+- Complex chords were hardest, because their EMG signals overlap
+
+## Next steps
+
+- Move from 4-channel to 8-channel EMG
+- Collect more varied playing data
+- Test across sessions and armband placements
+
+This work feeds into this year's [sEMG-based third arm](/projects/semg-third-arm/).
