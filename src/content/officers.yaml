@@ -10,8 +10,9 @@
   role: Co-President
   order: 2
 - id: uddhav
-  name: Uddhav
+  name: Uddhav Panchavati
   role: Project Director
+  photo: /officers/uddhav.jpg
   order: 3
 - id: skye
   name: Skye B.
