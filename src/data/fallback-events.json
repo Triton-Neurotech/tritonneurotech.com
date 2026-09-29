@@ -1,0 +1,49 @@
+[
+  {
+    "title": "Bootcamps: Week 3",
+    "start": "2026-10-12",
+    "end": "2026-10-18",
+    "location": "Exact days and rooms TBA",
+    "description": "EEG, EMG, ML and hardware. No experience needed."
+  },
+  {
+    "title": "Bootcamps: Week 4",
+    "start": "2026-10-19",
+    "end": "2026-10-25",
+    "location": "Exact days and rooms TBA",
+    "description": "Second week of bootcamps."
+  },
+  {
+    "title": "General body meeting",
+    "start": "2026-10-19",
+    "location": "Time and place TBA",
+    "description": "Meet the officers and this year's projects."
+  },
+  {
+    "title": "Orientation + NeuroTech Olympics",
+    "start": "2026-10-24",
+    "location": "Marshall Field",
+    "description": "Field day for new project members."
+  },
+  {
+    "title": "Social at UTC",
+    "start": "2026-11-02",
+    "end": "2026-11-08",
+    "location": "Westfield UTC",
+    "description": "Club social. Date TBA."
+  },
+  {
+    "title": "Journal club with Decoded Brain",
+    "start": "2026-11-09",
+    "end": "2026-11-15",
+    "location": "Date and place TBA",
+    "description": "Discuss a neurotech paper. Open to everyone."
+  },
+  {
+    "title": "End-of-quarter academic event",
+    "start": "2026-11-23",
+    "end": "2026-11-29",
+    "location": "Date and place TBA",
+    "description": "Meet UCSD neurotech labs, plus a research and industry panel."
+  }
+]

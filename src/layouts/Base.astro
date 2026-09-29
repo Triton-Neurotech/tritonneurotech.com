@@ -1,0 +1,268 @@
+---
+import '../styles/global.css';
+import Icon from '../components/Icon.astro';
+import { site, nav } from '../site.config';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+const { title, description = site.description } = Astro.props;
+const fullTitle = title ? `${title} | ${site.name}` : `${site.name} at UC San Diego`;
+const path = Astro.url.pathname;
+const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWith(href));
+const canonical = new URL(path, Astro.site);
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:type" content="website" />
+    <meta name="theme-color" content="#230f1c" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <header class="site-header">
+      <div class="wrap bar">
+        <a class="brand" href="/" aria-label={`${site.name} home`}>
+          <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+            <rect width="32" height="32" rx="7" fill="currentColor" />
+            <path d="M4 18h5l2-7 3 13 3-17 3 14 2-3h6" fill="none" stroke="#4CC98A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+          <span>{site.name}</span>
+        </a>
+        <button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+        <nav id="site-nav" class="site-nav" aria-label="Main">
+          <ul>
+            {nav.map((item) => (
+              <li>
+                <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>{item.label}</a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap footer-grid">
+        <div>
+          <p class="footer-name">{site.name}</p>
+          <p class="footer-note">
+            UC San Diego's neurotechnology club since 2018.
+            Project workdays: {site.workdays.when}, {site.workdays.where}.
+          </p>
+        </div>
+        <ul class="social" aria-label="Find us online">
+          <li><a href={site.links.discord}><Icon name="discord" /> Discord</a></li>
+          <li><a href={site.links.instagram}><Icon name="instagram" /> Instagram</a></li>
+          <li><a href={site.links.linktree}><Icon name="linktree" /> Linktree</a></li>
+          <li><a href={`mailto:${site.email}`}><Icon name="mail" /> {site.email}</a></li>
+        </ul>
+      </div>
+      <div class="wrap footer-base">
+        <span>© {new Date().getFullYear()} {site.name}. A registered student organization at UC San Diego.</span>
+      </div>
+    </footer>
+
+    <script>
+      const btn = document.querySelector<HTMLButtonElement>('.menu-btn');
+      const navEl = document.getElementById('site-nav');
+      btn?.addEventListener('click', () => {
+        const open = btn.getAttribute('aria-expanded') === 'true';
+        btn.setAttribute('aria-expanded', String(!open));
+        navEl?.classList.toggle('open', !open);
+      });
+    </script>
+  </body>
+</html>
+
+<style>
+  .skip {
+    position: absolute;
+    left: -999px;
+    top: 8px;
+    background: var(--green);
+    color: var(--plum);
+    padding: 8px 12px;
+    z-index: 10;
+  }
+  .skip:focus {
+    left: 8px;
+  }
+
+  .site-header {
+    border-bottom: 1px solid var(--rule);
+    background: var(--paper);
+    position: sticky;
+    top: 0;
+    z-index: 5;
+  }
+  .bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    min-height: 64px;
+  }
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--ink);
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1.125rem;
+    white-space: nowrap;
+    letter-spacing: -0.01em;
+  }
+  .brand-mark {
+    width: 30px;
+    height: 30px;
+    color: var(--burgundy);
+  }
+  .site-nav ul {
+    display: flex;
+    gap: 4px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .site-nav a {
+    display: block;
+    padding: 8px 10px;
+    color: var(--ink);
+    text-decoration: none;
+    font-weight: 500;
+    border-radius: var(--radius-s);
+  }
+  .site-nav a:hover {
+    background: var(--paper-deep);
+  }
+  .site-nav a[aria-current='page'] {
+    box-shadow: inset 0 -3px 0 var(--green);
+    border-radius: 0;
+  }
+  .menu-btn {
+    display: none;
+    font: inherit;
+    font-weight: 600;
+    background: none;
+    border: 2px solid var(--ink);
+    color: var(--ink);
+    border-radius: var(--radius-s);
+    padding: 6px 12px;
+  }
+
+  @media (max-width: 900px) {
+    .site-nav a {
+      padding: 8px 7px;
+      font-size: 0.95rem;
+    }
+    .brand {
+      font-size: 1rem;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .menu-btn {
+      display: block;
+    }
+    .site-nav {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: var(--paper);
+      border-bottom: 1px solid var(--rule);
+      padding: 8px var(--gutter) 16px;
+    }
+    .site-nav.open {
+      display: block;
+    }
+    .site-nav ul {
+      flex-direction: column;
+    }
+    .site-nav a {
+      padding: 12px 4px;
+      font-size: 1.125rem;
+    }
+    .site-nav a[aria-current='page'] {
+      box-shadow: inset 3px 0 0 var(--green);
+      padding-left: 14px;
+    }
+  }
+
+  .site-footer {
+    background: var(--burgundy);
+    color: var(--ink);
+    margin-top: clamp(48px, 8vw, 96px);
+    padding-top: 48px;
+  }
+  .site-footer a {
+    color: var(--ink);
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 32px;
+  }
+  .footer-name {
+    font-weight: 700;
+    font-size: var(--step-1);
+    color: var(--ink);
+    margin-bottom: 0.4em;
+  }
+  .footer-note {
+    color: #ecd9e2;
+    max-width: 44ch;
+  }
+  .social {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 10px;
+  }
+  .social a {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    overflow-wrap: anywhere;
+  }
+  .social a:hover {
+    text-decoration: underline;
+  }
+  .footer-base {
+    border-top: 1px solid rgba(255, 255, 255, 0.16);
+    margin-top: 40px;
+    padding-block: 20px 28px;
+    font-size: var(--step--1);
+    color: #e2c9d5;
+  }
+  @media (max-width: 720px) {
+    .footer-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

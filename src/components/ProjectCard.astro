@@ -1,0 +1,47 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+}
+const { project: p } = Astro.props;
+---
+<li data-tracks={p.data.tracks.join(' ')}>
+  <a class="project" href={`/projects/${p.id}/`}>
+    <h3>{p.data.title}</h3>
+    <p>{p.data.summary}</p>
+    {p.data.tracks.length > 0 && <span class="tags">{p.data.tracks.map((t) => <span class="tag">{t}</span>)}</span>}
+  </a>
+</li>
+
+<style>
+  .project {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    height: 100%;
+    padding: 22px;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-top: 4px solid var(--burgundy-2);
+    border-radius: var(--radius-s);
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .project:hover {
+    border-top-color: var(--green);
+  }
+  .project:hover h3 {
+    text-decoration: underline;
+  }
+  .project p {
+    margin: 0;
+    color: var(--muted);
+    flex: 1;
+  }
+  .tags {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+</style>

@@ -1,0 +1,16 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import NewsList from '../../components/NewsList.astro';
+
+const posts = (await getCollection('news')).sort((a, b) => +b.data.date - +a.data.date);
+---
+<Base title="News" description="Announcements, event recaps and member spotlights from Triton NeuroTech.">
+  <header class="wrap page-head">
+    <h1>News</h1>
+    <p>Announcements and recaps.</p>
+  </header>
+  <div class="wrap">
+    <NewsList posts={posts} />
+  </div>
+</Base>

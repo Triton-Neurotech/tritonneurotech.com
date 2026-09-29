@@ -1,0 +1,258 @@
+---
+// Simulated 8-channel EEG sweep. The "eyes closed" toggle boosts alpha
+// (8–12 Hz) over the back of the head, the classic Berger effect.
+---
+<figure class="eeg" data-eeg>
+  <canvas aria-hidden="true"></canvas>
+  <figcaption class="eeg-bar">
+    <p class="eeg-caption" data-caption>
+      Simulated EEG. Blinks show up as dips in the front channels.
+    </p>
+    <button class="eeg-toggle" type="button" aria-pressed="false" data-toggle>
+      Close the eyes
+    </button>
+  </figcaption>
+</figure>
+
+<script>
+  type Channel = { name: string; alpha: number; closedGain: number; frontal: boolean };
+  const CHANNELS: Channel[] = [
+    { name: 'Fp1', alpha: 0.12, closedGain: 1.3, frontal: true },
+    { name: 'Fp2', alpha: 0.12, closedGain: 1.3, frontal: true },
+    { name: 'C3', alpha: 0.2, closedGain: 1.9, frontal: false },
+    { name: 'C4', alpha: 0.2, closedGain: 1.9, frontal: false },
+    { name: 'P3', alpha: 0.28, closedGain: 2.8, frontal: false },
+    { name: 'P4', alpha: 0.28, closedGain: 2.8, frontal: false },
+    { name: 'O1', alpha: 0.34, closedGain: 3.4, frontal: false },
+    { name: 'O2', alpha: 0.34, closedGain: 3.4, frontal: false },
+  ];
+  const TRACE = '#4cc98a';
+  const LABEL = '#c9b3c0';
+  const LIT_TEXT = '#230f1c';
+  const CURSOR = '#e0708f';
+  const BG = '#1b0a15';
+  const GRID_MINOR = '#2a1222';
+  const GRID_MAJOR = '#44203a';
+  const GUTTER = 48;
+
+  function init(root: HTMLElement) {
+    const canvas = root.querySelector('canvas')!;
+    const ctx = canvas.getContext('2d')!;
+    const toggle = root.querySelector<HTMLButtonElement>('[data-toggle]')!;
+    const caption = root.querySelector<HTMLElement>('[data-caption]')!;
+    const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    let W = 0, H = 0, dpr = 1, pxPerSec = 120;
+    let buffers: Float32Array[] = [];
+    let cursor = 0; // x position of the sweep, in trace pixels
+    let t = 0; // simulated seconds
+    let eyesClosed = false;
+    let closedMix = 0; // eases toward 0/1 so alpha ramps up like real EEG
+    let nextBlink = 1.2, blinkAt = -10;
+    const noise = CHANNELS.map(() => 0);
+    const phase = CHANNELS.map((_, i) => i * 0.9 + Math.random());
+    let grid: HTMLCanvasElement | null = null;
+
+    function sample(ch: number, time: number) {
+      const c = CHANNELS[ch];
+      const gain = 1 + (c.closedGain - 1) * closedMix;
+      const wax = 0.65 + 0.35 * Math.sin(2 * Math.PI * 0.23 * time + phase[ch]);
+      const alpha = c.alpha * gain * wax * Math.sin(2 * Math.PI * 10.2 * time + phase[ch]);
+      const beta = 0.06 * Math.sin(2 * Math.PI * 21 * time + phase[ch] * 2);
+      const theta = 0.09 * Math.sin(2 * Math.PI * 5.8 * time + phase[ch] * 3);
+      noise[ch] = noise[ch] * 0.86 + (Math.random() - 0.5) * 0.22;
+      let v = alpha + beta + theta + noise[ch];
+      if (c.frontal && !eyesClosed) {
+        const d = time - blinkAt;
+        if (d > 0 && d < 0.45) v -= 1.25 * Math.exp(-((d - 0.18) ** 2) / 0.006);
+      }
+      return v;
+    }
+
+    function drawGrid() {
+      grid = document.createElement('canvas');
+      grid.width = W * dpr;
+      grid.height = H * dpr;
+      const g = grid.getContext('2d')!;
+      g.scale(dpr, dpr);
+      g.fillStyle = BG;
+      g.fillRect(0, 0, W, H);
+      const minor = pxPerSec / 5;
+      for (let i = 0, x = GUTTER; x < W; i++, x += minor) {
+        g.fillStyle = i % 5 === 0 ? GRID_MAJOR : GRID_MINOR;
+        g.fillRect(Math.round(x), 0, 1, H);
+      }
+      const lane = H / CHANNELS.length;
+      g.fillStyle = GRID_MINOR;
+      for (let i = 1; i < CHANNELS.length; i++) g.fillRect(GUTTER, Math.round(i * lane), W - GUTTER, 1);
+      g.fillStyle = GRID_MAJOR;
+      g.fillRect(GUTTER, 0, 1, H);
+    }
+
+    function resize() {
+      const rect = canvas.getBoundingClientRect();
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      W = Math.max(1, Math.round(rect.width));
+      H = Math.max(1, Math.round(rect.height));
+      if (W <= GUTTER + 20 || H < 40) return; // not laid out yet (hidden tab, display:none)
+      canvas.width = W * dpr;
+      canvas.height = H * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      pxPerSec = Math.max(70, Math.min(140, (W - GUTTER) / 9));
+      const traceW = W - GUTTER;
+      buffers = CHANNELS.map(() => new Float32Array(traceW));
+      // Pre-fill so the first frame already shows a full screen of signal.
+      const dt = 1 / pxPerSec;
+      for (let x = 0; x < traceW; x++) {
+        t += dt;
+        maybeBlink();
+        for (let c = 0; c < CHANNELS.length; c++) buffers[c][x] = sample(c, t);
+      }
+      cursor = reduceMotion ? traceW : 0;
+      drawGrid();
+      render();
+    }
+
+    function maybeBlink() {
+      if (t > nextBlink) {
+        blinkAt = t;
+        nextBlink = t + 2.5 + Math.random() * 3.5;
+      }
+    }
+
+    function render() {
+      if (!grid || !buffers.length) return;
+      ctx.drawImage(grid, 0, 0, W, H);
+      const lane = H / CHANNELS.length;
+      const amp = lane * 0.42;
+      const traceW = W - GUTTER;
+      const gapStart = cursor, gapEnd = cursor + 16;
+
+      ctx.font = '600 12px "Schibsted Grotesk", system-ui, sans-serif';
+      ctx.textBaseline = 'middle';
+      for (let c = 0; c < CHANNELS.length; c++) {
+        const mid = lane * (c + 0.5);
+        const lit = closedMix > 0.5 && CHANNELS[c].closedGain > 2.5;
+        ctx.fillStyle = LABEL;
+        if (lit) {
+          ctx.fillStyle = TRACE;
+          ctx.fillRect(8, mid - 10, GUTTER - 16, 20);
+          ctx.fillStyle = LIT_TEXT;
+        }
+        ctx.fillText(CHANNELS[c].name, 12, mid);
+
+        ctx.beginPath();
+        ctx.strokeStyle = TRACE;
+        ctx.lineWidth = 1.25;
+        const buf = buffers[c];
+        let pen = false;
+        for (let x = 0; x < traceW; x++) {
+          if (x >= gapStart && x < gapEnd) { pen = false; continue; }
+          const y = mid - buf[x] * amp;
+          if (!pen) { ctx.moveTo(GUTTER + x, y); pen = true; } else ctx.lineTo(GUTTER + x, y);
+        }
+        ctx.stroke();
+      }
+      if (!reduceMotion) {
+        ctx.fillStyle = CURSOR;
+        ctx.fillRect(GUTTER + cursor, 0, 2, H);
+      }
+    }
+
+    let last = 0, carry = 0, running = false, raf = 0;
+    function frame(now: number) {
+      if (!running) return;
+      if (!buffers.length) { raf = requestAnimationFrame(frame); return; }
+      const dt = Math.min(0.05, (now - (last || now)) / 1000);
+      last = now;
+      closedMix += ((eyesClosed ? 1 : 0) - closedMix) * Math.min(1, dt * 1.6);
+      carry += dt * pxPerSec;
+      const traceW = W - GUTTER;
+      const step = 1 / pxPerSec;
+      while (carry >= 1) {
+        carry -= 1;
+        t += step;
+        maybeBlink();
+        for (let c = 0; c < CHANNELS.length; c++) buffers[c][cursor] = sample(c, t);
+        cursor = (cursor + 1) % traceW;
+      }
+      render();
+      raf = requestAnimationFrame(frame);
+    }
+    function start() {
+      if (running || reduceMotion) return;
+      running = true;
+      last = 0;
+      raf = requestAnimationFrame(frame);
+    }
+    function stop() {
+      running = false;
+      cancelAnimationFrame(raf);
+    }
+
+    toggle.addEventListener('click', () => {
+      eyesClosed = !eyesClosed;
+      toggle.setAttribute('aria-pressed', String(eyesClosed));
+      toggle.textContent = eyesClosed ? 'Open the eyes' : 'Close the eyes';
+      caption.textContent = eyesClosed
+        ? 'Eyes closed: alpha waves (8–12 Hz) grow at the back of the head.'
+        : 'Simulated EEG. Blinks show up as dips in the front channels.';
+      if (reduceMotion) {
+        closedMix = eyesClosed ? 1 : 0;
+        resize();
+      }
+    });
+
+    new ResizeObserver(() => resize()).observe(canvas);
+    new IntersectionObserver(([e]) => (e.isIntersecting ? start() : stop())).observe(canvas);
+    document.addEventListener('visibilitychange', () => (document.hidden ? stop() : start()));
+    document.fonts?.ready.then(() => render());
+  }
+
+  document.querySelectorAll<HTMLElement>('[data-eeg]').forEach(init);
+</script>
+
+<style>
+  .eeg {
+    margin: 0;
+    border-block: 1px solid var(--rule);
+    background: #1b0a15;
+  }
+  canvas {
+    display: block;
+    width: 100%;
+    height: clamp(300px, 42vw, 440px);
+  }
+  .eeg-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    padding: 12px var(--gutter);
+    border-top: 1px solid var(--rule);
+    background: var(--paper);
+  }
+  .eeg-caption {
+    margin: 0;
+    color: var(--muted);
+    font-size: var(--step--1);
+    max-width: 70ch;
+  }
+  .eeg-toggle {
+    font: inherit;
+    font-weight: 600;
+    font-size: var(--step--1);
+    padding: 6px 14px;
+    border-radius: 999px;
+    border: 2px solid var(--ink);
+    background: transparent;
+    color: var(--ink);
+    cursor: pointer;
+  }
+  .eeg-toggle[aria-pressed='true'] {
+    background: var(--green);
+    border-color: var(--green);
+    color: var(--plum);
+  }
+</style>

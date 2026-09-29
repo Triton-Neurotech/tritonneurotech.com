@@ -1,0 +1,209 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import { tracks } from '../../site.config';
+
+const all = await getCollection('projects');
+const byTitle = (a: { data: { title: string } }, b: { data: { title: string } }) => a.data.title.localeCompare(b.data.title);
+const current = all.filter((p) => p.data.status !== 'complete');
+const builds = current.filter((p) => p.data.kind === 'build').sort(byTitle);
+const research = current.filter((p) => p.data.kind === 'research').sort(byTitle);
+const past = all.filter((p) => p.data.status === 'complete');
+
+// Group past projects by academic year, newest first. Labels like "Earlier" go last.
+const years = [...new Set(past.map((p) => p.data.year))].sort((a, b) => {
+  const ya = /^\d/.test(a), yb = /^\d/.test(b);
+  return ya && yb ? b.localeCompare(a) : ya ? -1 : yb ? 1 : 0;
+});
+const pastByYear = years.map((year) => ({ year, items: past.filter((p) => p.data.year === year) }));
+
+// From the 2026–27 project director plan.
+const bootcamps = [
+  { title: 'Intro sessions', body: 'Two sessions with demos and code.' },
+  { title: 'EEG', body: 'Build a simple game with an EEG headband.' },
+  { title: 'EMG', body: 'Turn muscle signals into commands.' },
+  { title: 'Machine learning', body: 'Lectures on deep, self-supervised and reinforcement learning.' },
+  { title: 'Hardware', body: 'The sensors and electronics we build with.' },
+];
+---
+<Base title="Projects" description="Triton NeuroTech's 2026–27 build and research projects, plus past projects in EEG, EMG, machine learning and hardware.">
+  <header class="wrap page-head">
+    <h1>Projects</h1>
+    <p>This year's teams and everything we've built before.</p>
+  </header>
+
+  <div class="wrap">
+    <fieldset class="filter" data-filter>
+      <legend class="visually-hidden">Filter projects by track</legend>
+      <label><input type="radio" name="track" value="all" checked /> All</label>
+      {tracks.map((t) => <label><input type="radio" name="track" value={t} /> {t}</label>)}
+    </fieldset>
+
+    <section class="group" aria-labelledby="current-h">
+      <h2 id="current-h">2026–27 projects</h2>
+      <p class="lead">
+        Teams form after fall bootcamps. Each one works toward presenting at the
+        <a href="https://caneurotech.vercel.app/">California Neurotechnology Conference</a> and publishing its code on GitHub.
+      </p>
+
+      <h3 class="sub">BCI projects</h3>
+      <ul class="project-list">
+        {builds.map((p) => <ProjectCard project={p} />)}
+      </ul>
+
+      <h3 class="sub">Research projects</h3>
+      <ul class="project-list">
+        {research.map((p) => <ProjectCard project={p} />)}
+      </ul>
+
+      <div class="forming">
+        <h3>Join through fall bootcamps</h3>
+        <p>Weeks 3 and 4. No experience needed.</p>
+        <dl class="bootcamps">
+          {bootcamps.map((b) => (
+            <div>
+              <dt>{b.title}</dt>
+              <dd>{b.body}</dd>
+            </div>
+          ))}
+        </dl>
+        <a class="btn btn-primary" href="/calendar/">See bootcamp dates</a>
+      </div>
+    </section>
+
+    <section class="group" aria-labelledby="past-h">
+      <h2 id="past-h">Past projects</h2>
+      {pastByYear.length === 0 && (
+        <p class="muted empty">
+          We're collecting writeups from past teams. Worked on a TNT project before?
+          <a href="/contact/">Send us the details</a> and we'll add it here.
+        </p>
+      )}
+      {pastByYear.map(({ year, items }) => (
+        <div class="year">
+          <h3 class="year-label">{year}</h3>
+          <ul class="project-list">
+            {items.map((p) => <ProjectCard project={p} />)}
+          </ul>
+        </div>
+      ))}
+    </section>
+  </div>
+</Base>
+
+<script>
+  const filter = document.querySelector<HTMLFieldSetElement>('[data-filter]');
+  filter?.addEventListener('change', (e) => {
+    const value = (e.target as HTMLInputElement).value;
+    document.querySelectorAll<HTMLElement>('[data-tracks]').forEach((li) => {
+      li.hidden = value !== 'all' && !li.dataset.tracks!.split(' ').includes(value);
+    });
+  });
+</script>
+
+<style>
+  .filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    border: 0;
+    padding: 0;
+    margin: 0 0 16px;
+  }
+  .filter label {
+    position: relative;
+    padding: 6px 14px;
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: var(--step--1);
+    cursor: pointer;
+    background: var(--surface);
+  }
+  .filter input {
+    position: absolute;
+    opacity: 0;
+    inset: 0;
+    cursor: pointer;
+  }
+  .filter label:has(input:checked) {
+    background: var(--green);
+    border-color: var(--green);
+    color: var(--plum);
+  }
+  .filter label:has(input:focus-visible) {
+    outline: 3px solid var(--green);
+    outline-offset: 2px;
+  }
+
+  .group {
+    padding-block: 32px;
+  }
+  .group > h2 {
+    margin-bottom: 20px;
+  }
+  .year-label {
+    font-size: var(--step-0);
+    color: var(--muted);
+    margin: 24px 0 12px;
+  }
+  .project-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
+    gap: 16px;
+  }
+  .lead {
+    font-size: var(--step-1);
+    max-width: 62ch;
+  }
+  .sub {
+    margin: 36px 0 12px;
+  }
+  .sub-note {
+    margin-top: -4px;
+  }
+  .forming {
+    max-width: 820px;
+    margin-top: 48px;
+    padding: 28px;
+    border-radius: var(--radius-m);
+    background: var(--burgundy);
+  }
+  .forming h3 {
+    font-size: var(--step-2);
+    margin-bottom: 10px;
+  }
+  .forming .bootcamps > div {
+    border-color: rgba(255, 255, 255, 0.18);
+  }
+  .forming .bootcamps dd {
+    color: #ecd9e2;
+  }
+  .bootcamps {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr));
+    gap: 0 32px;
+    margin: 0 0 24px;
+    border-top: 1px solid var(--rule);
+  }
+  .bootcamps > div {
+    padding-block: 14px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .bootcamps dt {
+    font-weight: 700;
+  }
+  .bootcamps dd {
+    margin: 2px 0 0;
+    color: var(--muted);
+  }
+  .empty {
+    padding: 20px;
+    border: 1px dashed var(--rule);
+    border-radius: var(--radius-s);
+  }
+</style>

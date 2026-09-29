@@ -1,0 +1,76 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+
+const officers = (await getCollection('officers')).map((o) => o.data).sort((a, b) => a.order - b.order);
+const initials = (name: string) =>
+  name.split(/\s+/).filter(Boolean).slice(0, 2).map((w) => w[0]!.toUpperCase()).join('');
+---
+<Base title="Officers" description="Meet the 2026–27 Triton NeuroTech officer board.">
+  <header class="wrap page-head">
+    <h1>Officers</h1>
+    <p>The 2026–27 board.</p>
+  </header>
+
+  <ul class="wrap officers">
+    {officers.map((o) => (
+      <li>
+        {o.photo ? (
+          <img src={o.photo} alt="" width="600" height="600" loading="lazy" />
+        ) : (
+          <div class="avatar" aria-hidden="true">{initials(o.name)}</div>
+        )}
+        <h2>{o.name}</h2>
+        <p class="role">{o.role}</p>
+        {(o.major || o.year) && <p class="muted">{[o.major, o.year].filter(Boolean).join(', ')}</p>}
+        {o.linkedin && (
+          <a href={o.linkedin} class="li"><Icon name="linkedin" size={18} /><span class="visually-hidden">{o.name} on </span>LinkedIn</a>
+        )}
+      </li>
+    ))}
+  </ul>
+</Base>
+
+<style>
+  .officers {
+    list-style: none;
+    margin-block: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr));
+    gap: 40px 24px;
+  }
+  img,
+  .avatar {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: var(--radius-m);
+    margin-bottom: 14px;
+  }
+  .avatar {
+    display: grid;
+    place-items: center;
+    background: var(--burgundy);
+    color: var(--green);
+    font-size: 3rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+  }
+  h2 {
+    font-size: var(--step-1);
+  }
+  .role {
+    font-weight: 600;
+    margin: 2px 0 4px;
+  }
+  .muted {
+    margin: 0 0 6px;
+  }
+  .li {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 600;
+  }
+</style>

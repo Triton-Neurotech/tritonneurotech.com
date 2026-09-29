@@ -1,0 +1,196 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import EegMontage from '../components/EegMontage.astro';
+import EventList from '../components/EventList.astro';
+import NewsList from '../components/NewsList.astro';
+import Icon from '../components/Icon.astro';
+import { site } from '../site.config';
+
+const news = (await getCollection('news')).sort((a, b) => +b.data.date - +a.data.date).slice(0, 3);
+
+const whatWeDo = [
+  { title: 'Projects', body: 'Year-long teams building BCIs and doing EEG/EMG research.', href: '/projects/', link: 'See projects' },
+  { title: 'Bootcamps', body: 'Fall workshops on EEG, EMG, ML and hardware. No experience needed.', href: '/calendar/', link: 'See dates' },
+  { title: 'Conference', body: 'We co-host the California Neurotechnology Conference with other UC and USC neurotech clubs.', href: site.links.conference, link: 'Visit the conference site' },
+  { title: 'Events', body: 'Speakers, lab panels, journal club and socials.', href: '/calendar/', link: 'See calendar' },
+];
+---
+<Base>
+  <section class="hero">
+    <div class="wrap hero-text">
+      <h1>Triton<br />NeuroTech</h1>
+      <div class="hero-side">
+        <p class="lede">UC San Diego's neurotechnology club. We build brain-computer interfaces.</p>
+        <div class="btn-row">
+          <a class="btn btn-primary" href={site.links.discord}><Icon name="discord" /> Join our Discord</a>
+          <a class="btn" href="/calendar/">See upcoming events</a>
+        </div>
+      </div>
+    </div>
+    <EegMontage />
+  </section>
+
+  <section class="section wrap about" id="about">
+    <div class="about-intro">
+      <h2>About us</h2>
+      <p>
+        Founded in 2018, we're a student club building EEG and EMG projects and doing neurotech research.
+        Every major is welcome.
+      </p>
+      <p class="workdays">
+        <strong>Project workdays:</strong> {site.workdays.when}, {site.workdays.where}.
+      </p>
+    </div>
+    <dl class="what">
+      {whatWeDo.map((w) => (
+        <div class="what-item">
+          <dt>{w.title}</dt>
+          <dd>
+            <p>{w.body}</p>
+            <a href={w.href}>{w.link}</a>
+          </dd>
+        </div>
+      ))}
+    </dl>
+  </section>
+
+  <section class="section wrap split" aria-labelledby="events-h">
+    <div class="split-head">
+      <h2 id="events-h">Upcoming events</h2>
+      <a class="btn" href="/calendar/"><Icon name="calendar" /> Full calendar</a>
+    </div>
+    <EventList limit={4} />
+  </section>
+
+  <section class="section wrap split" aria-labelledby="news-h">
+    <div class="split-head">
+      <h2 id="news-h">Latest news</h2>
+      <a class="btn" href="/news/">All news</a>
+    </div>
+    <NewsList posts={news} />
+  </section>
+
+  <section class="join">
+    <div class="wrap join-inner">
+      <h2>New to neurotech? Start with a bootcamp.</h2>
+      <p>No experience needed. Bootcamps lead straight into project teams.</p>
+      <div class="btn-row">
+        <a class="btn btn-primary" href={site.links.discord}><Icon name="discord" /> Join our Discord</a>
+        <a class="btn btn-light" href={site.links.instagram}><Icon name="instagram" /> Follow on Instagram</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero {
+    background: var(--burgundy);
+  }
+  .hero-text {
+    display: grid;
+    grid-template-columns: 1.25fr 1fr;
+    gap: clamp(24px, 4vw, 56px);
+    align-items: end;
+    padding-block: clamp(40px, 7vw, 88px) clamp(28px, 4vw, 48px);
+  }
+  h1 {
+    font-size: var(--step-4);
+    font-weight: 800;
+    letter-spacing: -0.045em;
+    line-height: 0.9;
+  }
+  .lede {
+    font-size: var(--step-1);
+    line-height: 1.45;
+    margin-bottom: 24px;
+  }
+
+  .about {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: clamp(32px, 6vw, 80px);
+  }
+  .about h2 {
+    margin-bottom: 0.6em;
+  }
+  .workdays {
+    padding: 14px 16px;
+    border-left: 4px solid var(--green);
+    background: var(--paper-deep);
+  }
+  .what {
+    margin: 0;
+    border-top: 2px solid var(--ink);
+  }
+  .what-item {
+    display: grid;
+    grid-template-columns: 11rem 1fr;
+    gap: 16px;
+    padding-block: 18px;
+    border-bottom: 1px solid var(--rule);
+  }
+  dt {
+    font-weight: 700;
+    font-size: var(--step-1);
+    line-height: 1.2;
+  }
+  dd {
+    margin: 0;
+  }
+  dd p {
+    margin-bottom: 0.4em;
+  }
+  dd a {
+    font-weight: 600;
+  }
+
+  .split {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: clamp(24px, 5vw, 64px);
+    border-top: 1px solid var(--rule);
+  }
+  .split-head h2 {
+    margin-bottom: 0.4em;
+  }
+  .split-head .btn {
+    margin-top: 12px;
+  }
+
+  .join {
+    background: var(--burgundy);
+    color: var(--ink);
+    margin-top: clamp(24px, 4vw, 48px);
+    margin-bottom: calc(-1 * clamp(48px, 8vw, 96px));
+  }
+  .join-inner {
+    padding-block: clamp(56px, 8vw, 96px);
+  }
+  .join h2 {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    letter-spacing: -0.03em;
+    max-width: 18ch;
+    margin-bottom: 0.5em;
+  }
+  .join p {
+    color: #ecd9e2;
+    font-size: var(--step-1);
+    max-width: 52ch;
+    margin-bottom: 28px;
+  }
+
+  @media (max-width: 680px) {
+    .hero-text,
+    .about,
+    .split {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (max-width: 520px) {
+    .what-item {
+      grid-template-columns: 1fr;
+      gap: 6px;
+    }
+  }
+</style>

@@ -1,0 +1,50 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  posts: CollectionEntry<'news'>[];
+}
+const { posts } = Astro.props;
+const fmt = (d: Date) =>
+  d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
+---
+<ol class="news-list">
+  {posts.map((p) => (
+    <li>
+      <time datetime={p.data.date.toISOString().slice(0, 10)}>{fmt(p.data.date)}</time>
+      <h3><a href={`/news/${p.id}/`}>{p.data.title}</a></h3>
+      <p>{p.data.summary}</p>
+    </li>
+  ))}
+</ol>
+
+<style>
+  .news-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--rule);
+  }
+  li {
+    padding-block: 20px;
+    border-bottom: 1px solid var(--rule);
+  }
+  time {
+    color: var(--muted);
+    font-size: var(--step--1);
+    font-weight: 500;
+  }
+  h3 {
+    margin: 4px 0 6px;
+  }
+  h3 a {
+    color: var(--ink);
+    text-decoration: none;
+  }
+  h3 a:hover {
+    text-decoration: underline;
+  }
+  p {
+    margin: 0;
+  }
+</style>

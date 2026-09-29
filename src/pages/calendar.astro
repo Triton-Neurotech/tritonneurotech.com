@@ -1,0 +1,98 @@
+---
+import Base from '../layouts/Base.astro';
+import EventList from '../components/EventList.astro';
+import Icon from '../components/Icon.astro';
+import { site } from '../site.config';
+
+const { id, timeZone } = site.calendar;
+const embed = id
+  ? `https://calendar.google.com/calendar/embed?${new URLSearchParams({
+      src: id, ctz: timeZone, mode: 'MONTH', showTitle: '0', showPrint: '0', showTz: '0', wkst: '1',
+    })}`
+  : '';
+const googleAdd = id ? `https://calendar.google.com/calendar/u/0/r?cid=${encodeURIComponent(id)}` : '';
+const ics = id ? `https://calendar.google.com/calendar/ical/${encodeURIComponent(id)}/public/basic.ics` : '';
+---
+<Base title="Calendar" description="Upcoming Triton NeuroTech bootcamps, socials, speakers and workdays. Subscribe to get new events automatically.">
+  <header class="wrap page-head">
+    <h1>Calendar</h1>
+    <p>Subscribe once and new events show up in your own calendar.</p>
+  </header>
+
+  <div class="wrap">
+    <div class="subscribe">
+      {id ? (
+        <>
+          <a class="btn btn-primary" href={googleAdd}><Icon name="calendar" /> Add to Google Calendar</a>
+          <a class="btn" href={ics.replace(/^https:/, 'webcal:')}>Add to Apple or Outlook</a>
+        </>
+      ) : (
+        <p class="muted setup">Calendar subscription links appear here once the club's Google Calendar is connected.</p>
+      )}
+    </div>
+
+    <div class="layout">
+      <section aria-labelledby="up-h">
+        <h2 id="up-h">Coming up</h2>
+        <EventList limit={10} />
+        <p class="recurring">
+          <strong>Every week:</strong> project workdays, {site.workdays.when}, {site.workdays.where}.
+        </p>
+      </section>
+
+      {embed && (
+        <section aria-labelledby="month-h">
+          <h2 id="month-h">Month view</h2>
+          <iframe src={embed} title="Triton NeuroTech Google Calendar, month view" loading="lazy"></iframe>
+        </section>
+      )}
+    </div>
+  </div>
+</Base>
+
+<style>
+  .subscribe {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 40px;
+  }
+  .setup {
+    margin: 0;
+  }
+  .layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+    gap: clamp(32px, 5vw, 64px);
+    align-items: start;
+  }
+  .layout:has(> section:only-child) {
+    grid-template-columns: minmax(0, 1fr);
+    max-width: 760px;
+  }
+  h2 {
+    font-size: var(--step-2);
+    margin-bottom: 16px;
+  }
+  .recurring {
+    margin-top: 20px;
+    padding: 14px 16px;
+    border-left: 4px solid var(--green);
+    background: var(--paper-deep);
+  }
+  iframe {
+    width: 100%;
+    height: 620px;
+    border: 1px solid var(--rule);
+    border-radius: var(--radius-s);
+    background: #fff;
+  }
+  @media (max-width: 760px) {
+    .layout {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    iframe {
+      height: 480px;
+    }
+  }
+</style>

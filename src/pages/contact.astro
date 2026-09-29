@@ -1,0 +1,170 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import { site } from '../site.config';
+
+const action = site.formspreeId ? `https://formspree.io/f/${site.formspreeId}` : '';
+---
+<Base title="Contact" description="Get in touch with Triton NeuroTech about joining, sponsorship, speaking or collaborating.">
+  <header class="wrap page-head">
+    <h1>Contact us</h1>
+    <p>Questions about joining, sponsoring or collaborating? Send us a message.</p>
+  </header>
+
+  <div class="wrap layout">
+    <form class="form" method="POST" action={action || undefined} data-form data-email={site.email}>
+      <label>
+        <span>Name</span>
+        <input name="name" autocomplete="name" required />
+      </label>
+      <label>
+        <span>Email</span>
+        <input name="email" type="email" autocomplete="email" required />
+      </label>
+      <label>
+        <span>What's this about?</span>
+        <select name="topic">
+          <option>Joining the club</option>
+          <option>Sponsorship</option>
+          <option>Speaking or a lab visit</option>
+          <option>Collaborating with another org</option>
+          <option>Something else</option>
+        </select>
+      </label>
+      <label>
+        <span>Message</span>
+        <textarea name="message" rows="6" required></textarea>
+      </label>
+      <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" class="visually-hidden" aria-hidden="true" />
+      <button class="btn btn-primary" type="submit">Send message</button>
+      <p class="status" role="status" data-status></p>
+    </form>
+
+    <aside class="elsewhere">
+      <h2>Other ways to reach us</h2>
+      <ul>
+        <li><a href={site.links.discord}><Icon name="discord" /> Discord</a></li>
+        <li><a href={site.links.instagram}><Icon name="instagram" /> Instagram</a></li>
+        <li><a href={`mailto:${site.email}`}><Icon name="mail" /> {site.email}</a></li>
+        <li><a href={site.links.linktree}><Icon name="linktree" /> Linktree</a></li>
+      </ul>
+      <p class="visit">
+        <strong>Visit in person:</strong> {site.workdays.when}, {site.workdays.where}.
+      </p>
+    </aside>
+  </div>
+</Base>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('[data-form]');
+  const status = document.querySelector<HTMLElement>('[data-status]');
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const data = new FormData(form);
+    const btn = form.querySelector('button')!;
+
+    // No Formspree ID configured: open the visitor's email app instead.
+    if (!form.getAttribute('action')) {
+      const subject = `[Website] ${data.get('topic')}`;
+      const body = `${data.get('message')}\n\n${data.get('name')} (${data.get('email')})`;
+      location.href = `mailto:${form.dataset.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      return;
+    }
+
+    btn.disabled = true;
+    status!.textContent = 'Sending…';
+    try {
+      const res = await fetch(form.action, { method: 'POST', body: data, headers: { Accept: 'application/json' } });
+      if (!res.ok) throw new Error();
+      form.reset();
+      status!.textContent = 'Message sent. We usually reply within a few days.';
+    } catch {
+      status!.textContent = `Your message didn't send. Try again, or email ${form.dataset.email}.`;
+    } finally {
+      btn.disabled = false;
+    }
+  });
+</script>
+
+<style>
+  .layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+    gap: clamp(32px, 6vw, 80px);
+    align-items: start;
+  }
+  .form {
+    display: grid;
+    gap: 18px;
+    max-width: 620px;
+  }
+  label {
+    display: grid;
+    gap: 6px;
+    font-weight: 600;
+  }
+  input,
+  select,
+  textarea {
+    font: inherit;
+    font-weight: 400;
+    color: var(--ink);
+    padding: 10px 12px;
+    border: 1px solid #6a3a57;
+    border-radius: var(--radius-s);
+    background: var(--plum-2);
+    width: 100%;
+  }
+  input:focus,
+  select:focus,
+  textarea:focus {
+    outline: 3px solid var(--green);
+    outline-offset: 0;
+    border-color: var(--green);
+  }
+  .form .btn {
+    justify-self: start;
+  }
+  .status {
+    margin: 0;
+    min-height: 1.5em;
+  }
+  .elsewhere h2 {
+    font-size: var(--step-2);
+    margin-bottom: 16px;
+  }
+  .elsewhere ul {
+    list-style: none;
+    margin: 0 0 24px;
+    padding: 0;
+    border-top: 1px solid var(--rule);
+  }
+  .elsewhere li {
+    padding-block: 12px;
+    border-bottom: 1px solid var(--rule);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px 12px;
+  }
+  .elsewhere li a {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    overflow-wrap: anywhere;
+  }
+  .elsewhere .muted {
+    font-size: var(--step--1);
+  }
+  .visit {
+    padding: 14px 16px;
+    border-left: 4px solid var(--green);
+    background: var(--paper-deep);
+  }
+  @media (max-width: 720px) {
+    .layout {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>
