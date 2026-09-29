@@ -1,20 +1,21 @@
 :root {
-  /* Burgundy and plum grounds, green signal */
-  --plum: #230f1c;
-  --plum-2: #321527;
-  --burgundy: #6d1f3d;
-  --burgundy-2: #8a2a4e;
-  --green: #4cc98a;
-  --green-2: #36a86f;
-  --green-deep: #1d7148;
+  /* Seaside escape: deep ocean, sea teal, seafoam, sand */
+  --deep: #0e2f40;
+  --deep-2: #133e53;
+  --sea: #1c6f80;
+  --sea-2: #2a8b9c;
+  --foam: #7fdcc4;
+  --foam-2: #5fc7ad;
+  --sand: #f1d9a8;
   /* semantic roles */
-  --paper: var(--plum);
-  --paper-deep: var(--plum-2);
-  --surface: #3a1a2d;
-  --rule: #4d2640;
-  --ink: #f6eef2;
-  --muted: #c9b3c0;
-  --signal: var(--green);
+  --paper: var(--deep);
+  --paper-deep: var(--deep-2);
+  --surface: #17485e;
+  --rule: #245a70;
+  --ink: #f3f8f7;
+  --muted: #a9c6cc;
+  --on-sea-muted: #d6ecec;
+  --signal: var(--foam);
 
   --font: 'Schibsted Grotesk', system-ui, sans-serif;
   --step--1: 0.875rem;
@@ -100,7 +101,7 @@ a:hover {
 }
 
 :focus-visible {
-  outline: 3px solid var(--green);
+  outline: 3px solid var(--foam);
   outline-offset: 2px;
   border-radius: 2px;
 }
@@ -159,14 +160,14 @@ a:hover {
 }
 
 .btn-primary {
-  background: var(--green);
-  border-color: var(--green);
-  color: var(--plum);
+  background: var(--foam);
+  border-color: var(--foam);
+  color: var(--deep);
 }
 
 .btn-primary:hover {
-  background: var(--green-2);
-  border-color: var(--green-2);
+  background: var(--foam-2);
+  border-color: var(--foam-2);
 }
 
 .btn-light {

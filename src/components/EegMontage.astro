@@ -26,13 +26,13 @@
     { name: 'O1', alpha: 0.34, closedGain: 3.4, frontal: false },
     { name: 'O2', alpha: 0.34, closedGain: 3.4, frontal: false },
   ];
-  const TRACE = '#4cc98a';
-  const LABEL = '#c9b3c0';
-  const LIT_TEXT = '#230f1c';
-  const CURSOR = '#e0708f';
-  const BG = '#1b0a15';
-  const GRID_MINOR = '#2a1222';
-  const GRID_MAJOR = '#44203a';
+  const TRACE = '#7fdcc4';
+  const LABEL = '#a9c6cc';
+  const LIT_TEXT = '#0e2f40';
+  const CURSOR = '#f1d9a8';
+  const BG = '#0a2433';
+  const GRID_MINOR = '#123447';
+  const GRID_MAJOR = '#1f4d63';
   const GUTTER = 48;
 
   function init(root: HTMLElement) {
@@ -216,7 +216,7 @@
   .eeg {
     margin: 0;
     border-block: 1px solid var(--rule);
-    background: #1b0a15;
+    background: #0a2433;
   }
   canvas {
     display: block;
@@ -251,8 +251,8 @@
     cursor: pointer;
   }
   .eeg-toggle[aria-pressed='true'] {
-    background: var(--green);
-    border-color: var(--green);
-    color: var(--plum);
+    background: var(--foam);
+    border-color: var(--foam);
+    color: var(--deep);
   }
 </style>
