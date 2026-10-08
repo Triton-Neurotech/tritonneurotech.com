@@ -1,20 +1,20 @@
 :root {
-  /* Seaside escape: deep ocean, sea teal, seafoam, sand */
-  --deep: #0e2f40;
-  --deep-2: #133e53;
-  --sea: #1c6f80;
-  --sea-2: #2a8b9c;
-  --foam: #7fdcc4;
-  --foam-2: #5fc7ad;
-  --sand: #f1d9a8;
+  /* Arctic Pearl (#bcc9d4), slightly more saturated, with navy ink */
+  --deep: #b3cadf; /* page */
+  --deep-2: #c6d8e8; /* raised tint */
+  --sea: #9dbad5; /* hero, footer and callout bands */
+  --sea-2: #5f86aa;
+  --foam: #1f4e79; /* buttons, links, focus */
+  --foam-2: #173d60;
+  --sand: #2f6fa8;
   /* semantic roles */
   --paper: var(--deep);
   --paper-deep: var(--deep-2);
-  --surface: #17485e;
-  --rule: #245a70;
-  --ink: #f3f8f7;
-  --muted: #a9c6cc;
-  --on-sea-muted: #d6ecec;
+  --surface: #e6eef6;
+  --rule: #8aa6bf;
+  --ink: #10243a;
+  --muted: #3b546c;
+  --on-sea-muted: #2b445c;
   --signal: var(--foam);
 
   --font: 'Schibsted Grotesk', system-ui, sans-serif;
@@ -176,7 +176,7 @@ a:hover {
 }
 
 .btn-light:hover {
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.3);
 }
 
 .btn-row {

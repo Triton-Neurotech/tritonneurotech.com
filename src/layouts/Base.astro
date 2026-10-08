@@ -26,7 +26,7 @@ const canonical = new URL(path, Astro.site);
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:type" content="website" />
-    <meta name="theme-color" content="#0e2f40" />
+    <meta name="theme-color" content="#b3cadf" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -41,7 +41,7 @@ const canonical = new URL(path, Astro.site);
         <a class="brand" href="/" aria-label={`${site.name} home`}>
           <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
             <rect width="32" height="32" rx="7" fill="currentColor" />
-            <path d="M4 18h5l2-7 3 13 3-17 3 14 2-3h6" fill="none" stroke="#7FDCC4" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M4 18h5l2-7 3 13 3-17 3 14 2-3h6" fill="none" stroke="#E6EEF6" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" />
           </svg>
           <span>{site.name}</span>
         </a>
@@ -137,7 +137,7 @@ const canonical = new URL(path, Astro.site);
   .brand-mark {
     width: 30px;
     height: 30px;
-    color: var(--sea);
+    color: var(--foam);
   }
   .site-nav ul {
     display: flex;
@@ -254,7 +254,7 @@ const canonical = new URL(path, Astro.site);
     text-decoration: underline;
   }
   .footer-base {
-    border-top: 1px solid rgba(255, 255, 255, 0.16);
+    border-top: 1px solid rgba(16, 36, 58, 0.2);
     margin-top: 40px;
     padding-block: 20px 28px;
     font-size: var(--step--1);
