@@ -5,7 +5,7 @@ export const site = {
   name: 'Triton NeuroTech',
   shortName: 'TNT',
   description:
-    "UC San Diego's neurotechnology club. We build EEG, EMG and brain-computer interface projects and teach anyone who wants to learn.",
+    "UC San Diego's neurotechnology club: EEG and EMG projects, research, bootcamps and events.",
   email: 'hello@tritonneurotech.com', // TODO: set up forwarding for this address
   workdays: {
     when: 'Sundays, 11am–4pm',
