@@ -1,5 +1,5 @@
 ---
-title: sEMG-controlled soft exosuit
+title: sEMG Soft-Exosuit for Rehabilitation and Learning
 year: "2026–27"
 status: active
 kind: build
