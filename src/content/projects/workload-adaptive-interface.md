@@ -1,5 +1,5 @@
 ---
-title: Workload-adaptive control interface
+title: EEG Workload-Adaptive Control Interface
 year: "2026–27"
 status: active
 kind: build
