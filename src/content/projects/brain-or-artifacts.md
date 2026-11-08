@@ -1,5 +1,5 @@
 ---
-title: Brain signals or artifacts?
+title: Investigating Cheap EEG/EMG Systems
 year: "2026–27"
 status: active
 kind: research
