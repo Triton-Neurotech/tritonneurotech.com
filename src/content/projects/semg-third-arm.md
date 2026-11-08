@@ -1,5 +1,5 @@
 ---
-title: sEMG-based third arm
+title: sEMG Supernumerary Robotic Arm
 year: "2026–27"
 status: active
 kind: build
