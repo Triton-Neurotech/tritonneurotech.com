@@ -1,5 +1,5 @@
 ---
-title: Do brain-like learning rules make brain-like vision models?
+title: Bio-plausible Learning vs Traditional Backpropagation
 year: "2026–27"
 status: active
 kind: research
