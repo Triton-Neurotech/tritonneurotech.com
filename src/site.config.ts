@@ -12,7 +12,7 @@ export const site = {
     where: 'Franklin Antonio Hall (FAH), 2nd floor',
   },
   links: {
-    discord: 'https://discord.gg/DCA7Cbg2H',
+    discord: 'https://discord.gg/QBQnFFVgVS',
     instagram: 'https://www.instagram.com/tritonneurotech/',
     linktree: 'https://linktr.ee/UCSD_TNT',
     conference: 'https://caneurotech.vercel.app/',
