@@ -8,8 +8,8 @@ export const site = {
     "UC San Diego's neurotechnology club: EEG and EMG projects, research, bootcamps and events.",
   email: 'hello@tritonneurotech.com', // TODO: set up forwarding for this address
   workdays: {
-    when: 'Sundays, 11am–4pm',
-    where: 'Franklin Antonio Hall, 2nd floor',
+    when: 'Saturdays, 11am–2pm',
+    where: 'Franklin Antonio Hall (FAH), 2nd floor',
   },
   links: {
     discord: 'https://discord.gg/DCA7Cbg2H',
