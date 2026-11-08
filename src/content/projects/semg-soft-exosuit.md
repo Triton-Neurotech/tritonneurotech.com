@@ -3,7 +3,7 @@ title: sEMG-controlled soft exosuit
 year: "2026–27"
 status: active
 kind: build
-tracks: [EMG, Hardware]
+tracks: [EMG, ML, Hardware]
 summary: A low-cost, fabric-based glove that helps move the fingers and wrist for rehabilitation, triggered by muscle signals from the forearm.
 ---
 
