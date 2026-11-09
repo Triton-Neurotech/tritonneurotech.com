@@ -4,7 +4,7 @@ date: 2026-10-24
 summary: Our kickoff field day at La Jolla Shores, where Project Teams met for the first time!
 ---
 
-Huge thank you to all the project members and leads who came out today for the NeuroTech Olympics! We hope you all had a great time and met your fellow team members!
+Huge thank you to all the project members and leads who came out today for the NeuroTech Olympics and Project Orientation! We hope you all had a great time and met your fellow team members!
 
 Congratulations to the top 3 teams!
 
