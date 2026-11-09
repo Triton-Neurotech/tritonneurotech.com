@@ -1,5 +1,5 @@
 ---
-title: Fall 26 - Project Team Announcements
+title: Fall 2026 - Project Team Announcements
 date: 2026-10-23
 summary: Project Teams are released!
 ---
