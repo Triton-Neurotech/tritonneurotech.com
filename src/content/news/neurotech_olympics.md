@@ -14,14 +14,5 @@ Congratulations to the top 3 teams!
 - 2nd. Butter fingers
 - 3rd. EEG monkeys
 
-**Watch the video below:**
 
-<iframe
-  src="https://www.instagram.com/p/DfVUIxLyKXB/embed/captioned/"
-  width="400"
-  height="700"
-  frameborder="0"
-  scrolling="no"
-  allowfullscreen
-  style="display:block; max-width:100%; margin:0 auto; border:0;"
-></iframe>
+[Watch our video of the TNT Olympics on Instagram](https://www.instagram.com/p/DfVUIxLyKXB/)
