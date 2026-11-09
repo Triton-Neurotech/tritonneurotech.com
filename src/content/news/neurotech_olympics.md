@@ -17,9 +17,9 @@ Congratulations to the top 3 teams!
 **Watch the video below:**
 
 <iframe
-  src="https://www.instagram.com/p/DfVUIxLyKXB/embed"
+  src="https://www.instagram.com/p/DfVUIxLyKXB/embed/captioned/"
   width="400"
-  height="600"
+  height="700"
   frameborder="0"
   scrolling="no"
   allowfullscreen
