@@ -16,9 +16,12 @@ Congratulations to the top 3 teams!
 
 Watch the video below:
 
-<div style="max-width:540px; margin:0 auto;">
-<blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DfVUIxLyKXB/" data-instgrm-version="14" style="max-width:540px; width:100%; margin:0 auto;">
-  <a href="https://www.instagram.com/p/DfVUIxLyKXB/">View TNT Olympics post on Instagram</a>
-</blockquote>
-</div>
-<script async src="//www.instagram.com/embed.js"></script>
+<iframe
+  src="https://www.instagram.com/p/DfVUIxLyKXB/embed"
+  width="400"
+  height="600"
+  frameborder="0"
+  scrolling="no"
+  allowfullscreen
+  style="display:block; max-width:100%; margin:0 auto; border:0;"
+></iframe>
