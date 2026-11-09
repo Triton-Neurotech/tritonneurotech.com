@@ -14,7 +14,7 @@ Congratulations to the top 3 teams!
 - 2nd. Butter fingers
 - 3rd. EEG monkeys
 
-Watch the video below:
+**Watch the video below:**
 
 <iframe
   src="https://www.instagram.com/p/DfVUIxLyKXB/embed"
