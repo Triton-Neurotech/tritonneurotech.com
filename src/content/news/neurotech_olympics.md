@@ -6,7 +6,7 @@ summary: Our kickoff field day at La Jolla Shores, where Project Teams met for t
 
 Huge thank you to all the project members and leads who came out today for the NeuroTech Olympics and Project Orientation! We hope you all had a great time and met your fellow team members!
 
-[Watch our video of the TNT Olympics on Instagram](https://www.instagram.com/p/DfVUIxLyKXB/)
+[Watch our Recap/Vlog of the TNT Olympics on Instagram](https://www.instagram.com/p/DfVUIxLyKXB/)
 
 Congratulations to the top 3 teams!
 
