@@ -6,6 +6,8 @@ summary: Our kickoff field day at La Jolla Shores, where Project Teams met for t
 
 Huge thank you to all the project members and leads who came out today for the NeuroTech Olympics and Project Orientation! We hope you all had a great time and met your fellow team members!
 
+[Watch our video of the TNT Olympics on Instagram](https://www.instagram.com/p/DfVUIxLyKXB/)
+
 Congratulations to the top 3 teams!
 
 **NeuroTech Olympics Team Placements:**
@@ -16,13 +18,12 @@ Congratulations to the top 3 teams!
 
 ## Official Team Names
 
-| Project Team | Team Name |
-| --- | --- |
-| Arm | Break an arm |
-| Exosuit | Butter fingers |
-| Workload | Kenny the 5th |
-| Bioplausible | Blue coma |
-| EEG/EMG Research | EEG monkeys |
+- Arm: Break an arm
+- Exosuit: Butter fingers
+- Workload: Kenny the 5th
+- Bioplausible: Blue coma
+- EEG/EMG Research: EEG monkeys
+
 
 ## Event Results
 
@@ -60,5 +61,3 @@ Congratulations to the top 3 teams!
 - 1st. EEG monkeys
 - 2nd. Blue coma
 - 3rd. Officers
-
-[Watch our video of the TNT Olympics on Instagram](https://www.instagram.com/p/DfVUIxLyKXB/)
