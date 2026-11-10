@@ -1,7 +1,7 @@
 ---
 title: Deep Learning Bootcamp Series
 date: 2026-11-10
-summary: Introduction to deep learning bootcamp sessions soon!
+summary: 2 hour introductory sessions to topics in deep learning
 ---
 
 # REMINDER: Deep Learning Bootcamp Series starts TOMORROW 
