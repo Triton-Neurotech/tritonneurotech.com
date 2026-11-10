@@ -4,8 +4,6 @@ date: 2026-11-10
 summary: 2 hour introductory sessions to topics in deep learning
 ---
 
-# REMINDER: Deep Learning Bootcamp Series starts TOMORROW 
-
 Triton NeuroTech will be beginning our **Deep Learning Bootcamp Series** this **Tuesday, November 10th**!
 
 The Bootcamp Series is open to all UCSD students, regardless of experience. **If you are a Project Team Member in the Software Track**, attendance to a **single** Deep Learning Bootcamp Session is **required **of you (equivalent to workday attendance).
