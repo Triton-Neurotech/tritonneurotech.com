@@ -24,4 +24,4 @@ Triton NeuroTech is hosting our **Week 7 Journal Club**, and it’s open to ever
 - Present solo or with a team (one 5-minute slot per group).
 - TNT officers will also be presenting what we’re working on, so come connect and see our research!
 - No topic yet? [Sign up](https://docs.google.com/forms/d/e/1FAIpQLSdsh-FNhFUDDy4aC6xBQEfT-ZRyWo-H3U9bxX7ezdkkVrd8Gw/viewform) anyway and we’ll help match you with an interesting paper.
-- Keep it short, business casual, and fun—great low-stakes public speaking practice to add to your resume.
+- Keep it short, business casual, and fun. This is great low-stakes public speaking practice to add to your resume.
