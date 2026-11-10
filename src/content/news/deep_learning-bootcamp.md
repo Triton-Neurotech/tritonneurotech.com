@@ -6,7 +6,7 @@ summary: 2 hour introductory sessions to topics in deep learning
 
 Triton NeuroTech will be beginning our **Deep Learning Bootcamp Series** this **Tuesday, November 10th**!
 
-The Bootcamp Series is open to all UCSD students, regardless of experience. **If you are a Project Team Member in the Software Track**, attendance to a **single** Deep Learning Bootcamp Session is **required **of you (equivalent to workday attendance).
+The Bootcamp Series is open to all UCSD students, regardless of experience. **If you are a Project Team Member in the Software Track**, attendance to a **single** Deep Learning Bootcamp Session is **required** of you (equivalent to workday attendance).
 
 ## Overview
 - **Bootcamp Material**: Quick overview of supervised learning methods for EEG; Best practices (validation, what makes a good model); Unsupervised learning (foundation models, pretraining objectives, representation learning); Open questions/future directions; Code implementations
