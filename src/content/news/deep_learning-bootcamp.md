@@ -18,5 +18,3 @@ The Bootcamp Series is open to all UCSD students, regardless of experience. **If
 - Deep Learning Bootcamp Session 2 - SUN NOV 15: 11-1PM @ FAH
 
 **Please RSVP for your choice of session if you haven't done so yet! RSVP forms can be found on our Instagram or Discord.**
-
-@everyone
