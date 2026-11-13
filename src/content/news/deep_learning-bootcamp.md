@@ -1,6 +1,6 @@
 ---
 title: Deep Learning Bootcamp Series
-date: 2026-11-10
+date: 2026-11-15
 summary: 2 hour introductory sessions to topics in deep learning
 ---
 
@@ -14,7 +14,7 @@ The Bootcamp Series is open to all UCSD students, regardless of experience. **If
 - **Recommended Prerequisites**: Watch the deep learning series & LLM series from 3Blue1Brown
 
 ## Bootcamp Sessions:
-- Deep Learning Bootcamp Session 1 - TUES NOV, 5-7 PM @WLH 2113
+- Deep Learning Bootcamp Session 1 - TUES NOV 10, 5-7 PM @WLH 2113
 - Deep Learning Bootcamp Session 2 - SUN NOV 15: 11-1PM @ FAH
 
 **Please RSVP for your choice of session if you haven't done so yet! RSVP forms can be found on [this Google Form](https://forms.gle/FGtLouG279WsCipJ6).**
