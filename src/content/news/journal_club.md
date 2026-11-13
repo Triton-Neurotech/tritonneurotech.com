@@ -1,10 +1,10 @@
 ---
-title: Week 7 Journal Club 
-date: 2026-11-13
+title: Week 8 Journal Club 
+date: 2026-11-20
 summary: Learn and discuss neuroscience with us!
 ---
 
-Triton NeuroTech is hosting our **Week 7 Journal Club**, and it’s open to everyone across campus: whether you’re in neurotech, bioengineering, mechanical engineering, computer science, cognitive science, or just curious about the brain!
+Triton NeuroTech is hosting our **Week 8 Journal Club**, and it’s open to everyone across campus: whether you’re in neurotech, bioengineering, mechanical engineering, computer science, cognitive science, or just curious about the brain!
 
 ## We want you on stage to share anything neurotech-adjacent that excites you:
 
@@ -14,8 +14,8 @@ Triton NeuroTech is hosting our **Week 7 Journal Club**, and it’s open to ever
 
 ## Event Details:
 
-- **Date**: Friday, November 13, 2026
-- **Time**: 7:00 PM – 10:00 PM (Presentations start at 7:30 PM)
+- **Date**: Friday, November 20, 2026
+- **Time**: 6:30 PM
 - **Location**: 2512 Henry Booker Room (Jacobs Hall, ECE Student Orgs)
 - **Who**: Open to ANY UCSD student (undergrad, MS, PhD) from ANY major/club!
 
